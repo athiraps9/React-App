@@ -1,34 +1,29 @@
-import React, { use, useState } from 'react'
-import assets from '../assets/assets'
+import React, { useState, useContext } from 'react';
+import assets from '../assets/assets';
+import { AuthContext } from '../../context/AuthContext';
 
 const LoginPage = () => {
+  const [currState, setCurrState] = useState("Sign up");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState(""); 
+  const [bio, setBio] = useState(""); 
+  const [isDataSubmitted, setIsDataSubmitted] = useState(false);
 
-  const [currState,setCurrState] = useState("Sign up")
-  const [fullName,setFullName] = useState("")
-  const [email,setEmail]=useState("")
+  const { login } = useContext(AuthContext);
 
-  
-    console.log("Email:", email); // Check if @ is captured
- 
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
 
-
-
-  const [password,setPassword] = useState(" ")
-
-   console.log("Password:", password);
-
-  const [bio,setBio] = useState(" ")
-  const [isDataSubmitted,setIsDataSubmitted] = useState(false)
-  const onSubmitHandler = (Event)=>{
-    Event.preventDefault();
-
-    if(currState === 'Sign up' && !isDataSubmitted){
-
-      setIsDataSubmitted(true)
-      return ;
+    if (currState === "Sign up" && !isDataSubmitted) {
+      setIsDataSubmitted(true);
+      return;
     }
-  }
 
+           
+    login(currState === "Sign up" ? 'signup' : 'login',{fullName,email,password,bio});
+    
+    };
   
 
 
@@ -104,6 +99,6 @@ const LoginPage = () => {
       
     </div>
   )
-}
+};
 
-export default LoginPage
+export default LoginPage;
